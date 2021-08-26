@@ -1,56 +1,48 @@
 /* eslint-disable prettier/prettier */
 import React, { createContext, ReactNode, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 interface PropsContext{
-    settingsPayment: PropsSettingsPayments;
-    handleChangeSettingsPayments: (option: any) => void;
+    control: any;
+    handleSubmit: any;
+    errors: any,
+    onSubmit: any,
+    showCheckout: boolean;
+    handleShowCheckout: () => void;
 }
 
 interface PropsProvider{
     children: ReactNode;
 }
 
-interface PropsSelectedPortion {
-    portion: number;
-    pricePerPortion: number;
-    completeValue: string;
-}
-
-interface PropsSettingsPayments {
+interface PropsFormData{
     numCard: string;
     name: string;
     val: string;
-    cvv: number;
-    selectedPrice: PropsSelectedPortion,
+    cvv: string;
+    portion: string;
 }
 
 export const AppContext = createContext({} as PropsContext);
 
 export const AppProvider = ({ children }: PropsProvider) => {
 
-    const [settingsPayment, setSettingsPayment] = useState<PropsSettingsPayments>({
-        numCard: '',
-        name: '',
-        val: '',
-        cvv: 0,
-        selectedPrice: {
-            portion: 1,
-            pricePerPortion: 0,
-            completeValue: '',
-        },
-    });
+    const [showCheckout, setShowCheckout] = useState<boolean>(false);
+    const { control, handleSubmit, formState: { errors } } = useForm<PropsFormData>();
+    const onSubmit = async() => {};
 
-    const handleChangeSettingsPayments = (option: any) => {
-        setSettingsPayment({
-            ...settingsPayment,
-            ...option,
-        });
+    const handleShowCheckout = () => {
+        setShowCheckout(prevState => !prevState);
     };
 
     return (
         <AppContext.Provider value={{
-            settingsPayment,
-            handleChangeSettingsPayments,
+            control,
+            errors,
+            showCheckout,
+            handleSubmit,
+            onSubmit,
+            handleShowCheckout,
         }}>
             {children}
         </AppContext.Provider>

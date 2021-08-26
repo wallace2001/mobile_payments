@@ -15,6 +15,7 @@ export const COLORS = {
     green: '#259c21',
     white: '#fff',
     black: '#000',
+    red: '#910000',
 };
 
 export const SIZES = {
@@ -23,7 +24,6 @@ export const SIZES = {
 };
 
 export const IconCards = (name: string | false) => {
-    console.log(name);
     switch (name) {
         case 'amex':
             return Amex;

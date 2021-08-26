@@ -1,17 +1,13 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { COLORS, IconCards, SIZES } from '../../constants/theme';
-import { MaskCard, MaskVal, VerifyCard } from '../utils/masks';
-import { AppContext } from '../context/appContext';
-import { Input } from '../components/Input';
+import React from 'react';
+import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
+import { COLORS, SIZES } from '../../constants/theme';
 import { Button } from '../components/Button';
-import { PortionInput } from '../components/PortionInput';
+import { useNavigation } from '@react-navigation/native';
 
-export const Payment = () => {
-    const [numCard, setNumCard] = useState<string>('');
-    const { settingsPayment, handleChangeSettingsPayments } = useContext(AppContext);
+export const Home = () => {
+    const navigation: any = useNavigation();
 
     return (
         <View style={styles.container}>
@@ -25,60 +21,23 @@ export const Payment = () => {
                     }}>Total</Text>
                 </View>
                 <ScrollView style={styles.content}>
-                    <Input
-                        title="Número do cartão"
-                        value={settingsPayment.numCard}
-                        placeholder="Digite o número do seu cartão"
-                        keyboardType="numeric"
-                        maxLength={19}
-                        onChangeText={(text: string) => {
-                            setNumCard(text);
-                            handleChangeSettingsPayments({numCard: MaskCard(text)});
-                        }}
-                        icon={IconCards(VerifyCard(numCard))}
-                    />
-                    <Input
-                        title="Nome completo"
-                        value={settingsPayment.name}
-                        placeholder="Digite seu nome"
-                        keyboardType="default"
-                        onChangeText={(text: string) => handleChangeSettingsPayments({name: text.toUpperCase()})}
-                        nameIcon="user"
-                    />
-                    <View style={styles.boxFormTwoComponents}>
-                        <Input
-                            title="Validade"
-                            value={settingsPayment.val}
-                            maxLength={7}
-                            placeholder="Validade"
-                            keyboardType="numeric"
-                            onChangeText={(text: string) => handleChangeSettingsPayments({val: MaskVal(text)})}
-                            nameIcon="calendar-day"
-                            stylesCustom={{
-                                flex: 1,
-                                marginRight: 10,
-                            }}
+
+                    <View style={styles.product}>
+                        <Image
+                            style={styles.imageProduct}
+                            source={{uri: 'https://images-americanas.b2w.io/produtos/01/00/offers/01/00/item/133833/9/133833989_1GG.png'}}
                         />
-                        <Input
-                            title="CVV"
-                            value={String(settingsPayment.cvv)}
-                            keyboardType="numeric"
-                            placeholder="CVV"
-                            maxLength={3}
-                            onChangeText={(text: string) => handleChangeSettingsPayments({cvv: text})}
-                            nameIcon="key"
-                            stylesCustom={{
-                                flex: 1,
-                                marginLeft: 10,
-                            }}
-                        />
+                        <View style={styles.left}>
+                            <Text style={styles.productName}>Call of Duty</Text>
+                            <Text style={styles.productPrice}>R$ 299,00</Text>
+                        </View>
                     </View>
-                    <PortionInput
-                        portion={settingsPayment.selectedPrice.portion}
-                        handleChangeSettingsPayments={handleChangeSettingsPayments}
-                    />
+
                     <Button
                         text="Pagar"
+                        onPress={() => {
+                            navigation.navigate('Payment');
+                        }}
                     />
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -111,14 +70,36 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
     },
-    boxFormTwoComponents: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginTop: 30,
-    },
     textHeader: {
         fontSize: 28,
         color: COLORS.white,
         fontFamily: 'Ubuntu-Bold',
+    },
+    product: {
+        width: '100%',
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderColor: COLORS.purple,
+        marginTop: 50,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        justifyContent: 'flex-start',
+        borderRadius: 10,
+    },
+    imageProduct: {
+        width: 80,
+        height: 80,
+    },
+    left: {},
+    productName: {
+        fontFamily: 'Ubuntu-Medium',
+        fontSize: 17,
+        color: COLORS.purple,
+    },
+    productPrice: {
+        fontFamily: 'Ubuntu-Regular',
+        fontSize: 15,
+        color: COLORS.purple,
+        marginTop: 10,
     },
 });

@@ -6,12 +6,12 @@ import {
 } from 'react-native';
 import { COLORS } from './constants/theme';
 import { AppProvider } from './src/context/appContext';
-import { Payment } from './src/pages';
+import { Router } from './src/routes';
 const App = () => {
   return (
     <AppProvider>
       <SafeAreaView style={styles.container}>
-        <Payment />
+        <Router />
       </SafeAreaView>
     </AppProvider>
   );

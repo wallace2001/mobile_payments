@@ -37,8 +37,6 @@ export const Portion = (value: number) => {
 
 export const VerifyCard = (value: number | string) => {
 
-    console.log('Number: ', value);
-
     const cards: any = {
         visa      : /^4[0-9]{12}(?:[0-9]{3})/,
         mastercard : /^5[1-5][0-9]{14}/,
