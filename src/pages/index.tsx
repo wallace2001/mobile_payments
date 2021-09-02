@@ -1,48 +1,67 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
 import { COLORS, SIZES } from '../../constants/theme';
 import { Button } from '../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import {  } from '@react-navigation/native';
 
-export const Home = () => {
-    const navigation: any = useNavigation();
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-    return (
-        <View style={styles.container}>
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-                <View style={styles.header}>
-                    <Text style={styles.textHeader}>299.00 R$</Text>
-                    <Text style={{
-                        fontSize: 16,
-                        color: COLORS.white,
-                        fontFamily: 'Ubuntu-Medium',
-                    }}>Total</Text>
-                </View>
-                <ScrollView style={styles.content}>
+type RootStackParamList = {
+  Home: undefined;
+  Payment: undefined;
+};
 
-                    <View style={styles.product}>
-                        <Image
-                            style={styles.imageProduct}
-                            source={{uri: 'https://images-americanas.b2w.io/produtos/01/00/offers/01/00/item/133833/9/133833989_1GG.png'}}
-                        />
-                        <View style={styles.left}>
-                            <Text style={styles.productName}>Call of Duty</Text>
-                            <Text style={styles.productPrice}>R$ 299,00</Text>
-                        </View>
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+export class Home extends Component<Props>{
+    constructor(props: any){
+        super(props);
+
+        this.state = {
+            userName: 'name1',
+        };
+    }
+    render(){
+        const handleClick = () => {
+            this.props.navigation.navigate('Payment');
+        };
+
+        return (
+            <View style={styles.container}>
+                <KeyboardAvoidingView style={styles.container} behavior="padding">
+                    <View style={styles.header}>
+                        <Text style={styles.textHeader}>299.00 R$</Text>
+                        <Text style={{
+                            fontSize: 16,
+                            color: COLORS.white,
+                            fontFamily: 'Ubuntu-Medium',
+                        }}>Total</Text>
                     </View>
+                    <ScrollView style={styles.content}>
 
-                    <Button
-                        text="Pagar"
-                        onPress={() => {
-                            navigation.navigate('Payment');
-                        }}
-                    />
-                </ScrollView>
-            </KeyboardAvoidingView>
-        </View>
-    );
+                        <View style={styles.product}>
+                            <Image
+                                style={styles.imageProduct}
+                                source={{uri: 'https://images-americanas.b2w.io/produtos/01/00/offers/01/00/item/133833/9/133833989_1GG.png'}}
+                            />
+                            <View style={styles.left}>
+                                <Text style={styles.productName}>Call of Duty</Text>
+                                <Text style={styles.productPrice}>R$ 299,00</Text>
+                            </View>
+                        </View>
+
+                        <Button
+                            text="Pagar"
+                            onPress={handleClick}
+                        />
+                    </ScrollView>
+                </KeyboardAvoidingView>
+            </View>
+        );
+    }
+
 };
 
 const styles = StyleSheet.create({

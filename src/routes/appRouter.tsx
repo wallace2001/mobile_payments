@@ -5,7 +5,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '../pages';
 import { Payment } from '../pages/payment';
 
-const { Screen, Navigator } = createNativeStackNavigator();
+type RootStackParamList = {
+    Home: undefined;
+    Payment: undefined;
+};
+
+const { Screen, Navigator } = createNativeStackNavigator<RootStackParamList>();
 
 export const AppRouter = () => {
     return (
